@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>belajarIT</title>
+    <!-- Favicon -->
+    <link rel="icon" href="logobelajarit.jpg" type="image/jpeg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body
+    class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-600 to-blue-800 p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <!-- Logo di atas form -->
+        <div class="w-full text-center mb-4">
+            <img src="logobelajarit.jpg" alt="Logo Qourse Clone" class="mx-auto" style="max-height: 100px;">
+        </div>
+        <h2 class="text-2xl font-bold text-center text-blue-600 mb-4">Login</h2>
+
+        <form id="loginForm">
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium">Email</label>
+                <input type="email" id="email"
+                    class="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+                    placeholder="Masukkan email" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium">Password</label>
+                <input type="password" id="password"
+                    class="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+                    placeholder="Masukkan password" required>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition">Login</button>
+        </form>
+
+        <p class="mt-4 text-center text-sm">Belum punya akun? <a href="daftar.html"
+                class="text-blue-600 font-semibold">Daftar</a></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            window.location.href = "dashboard.html";
+        });
+    </script>
+
+</body>
+</html>

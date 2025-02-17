@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kursus</title>
+    <!-- Favicon -->
+    <link rel="icon" href="logobelajarit.jpg" type="image/jpeg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0073e6;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #005bb5;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: background 0.3s;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background: #005bb5;
+        }
+
+        .course-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .course {
+            background: #004899;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            max-width: 300px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .course:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            color: black;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        footer {
+            text-align: center;
+            background: #005bb5;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            background: #121212;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            text-align: left;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        ul {
+            padding-left: 20px;
+
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        .modal-content button {
+            background-color: #007bff;
+            /* Warna biru */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Transisi hover */
+        }
+
+        .modal-content button:hover {
+            background-color: #0056b3;
+            /* Warna biru lebih gelap saat hover */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Logo di atas form -->
+        <div class="w-full text-center mb-4">
+            <img src="logobelajarit.jpg" alt="Logo Qourse Clone" class="mx-auto" style="max-height: 100px;">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="kursus.html">Kursus</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+                <li><a href="profil.html">Profil</a></li>
+                <li><a href="https://athallarakhasyaft.github.io/belajarIT/">Sumber Lainnya</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <center>
+            <section class="hero">
+                <h2>Daftar Kursus</h2>
+                <p>Temukan kursus yang sesuai dengan minat dan kebutuhan Anda.</p>
+            </section>
+        </center>
+        <section class="course-container">
+            <div class="course" onclick="openModal('htmlcssjs')">
+                <i class="fas fa-laptop-code fa-3x"></i>
+                <h3>Web Development</h3>
+                <p>Pelajari HTML, CSS, dan JavaScript dari dasar hingga mahir.</p>
+            </div>
+            <div class="course" onclick="openModal('cybersecurity')">
+                <i class="fas fa-shield-alt fa-3x"></i>
+                <h3>Cyber Security</h3>
+                <p>Pelajari cara melindungi data dan sistem dari serangan.</p>
+            </div>
+            <div class="course" onclick="openModal('uiux')">
+                <i class="fas fa-paint-brush fa-3x"></i>
+                <h3>UI/UX Design</h3>
+                <p>Prinsip desain antarmuka dan pengalaman pengguna yang efektif.</p>
+            </div>
+            <div class="course" onclick="openModal('database')">
+                <i class="fas fa-database fa-3x"></i>
+                <h3>Database Management</h3>
+                <p>Pelajari MySQL, PostgreSQL, dan MongoDB.</p>
+            </div>
+            <div class="course" onclick="openModal('networking')">
+                <i class="fas fa-network-wired fa-3x"></i>
+                <h3>Networking</h3>
+                <p>Dasar-dasar jaringan, protokol, dan keamanan jaringan.</p>
+            </div>
+            <div class="course" onclick="openModal('cloudcomputing')">
+                <i class="fas fa-cloud fa-3x"></i>
+                <h3>Cloud Computing</h3>
+                <p>Pengenalan AWS, Google Cloud, dan Azure.</p>
+            </div>
+            <div class="course" onclick="openModal('machinelearning')">
+                <i class="fas fa-robot fa-3x"></i>
+                <h3>Machine Learning & AI</h3>
+                <p>Belajar kecerdasan buatan dan pembelajaran mesin.</p>
+            </div>
+            <div class="course" onclick="openModal('blockchain')">
+                <i class="fas fa-link fa-3x"></i>
+                <h3>Blockchain & Crypto</h3>
+                <p>Memahami teknologi blockchain dan smart contract.</p>
+            </div>
+            <div class="course" onclick="openModal('mobiledevelopment')">
+                <i class="fas fa-mobile-alt fa-3x"></i>
+                <h3>Mobile App Development</h3>
+                <p>Pembuatan aplikasi Android dan iOS menggunakan Flutter dan React Native.</p>
+            </div>
+            <div class="course" onclick="openModal('backend')">
+                <i class="fas fa-server fa-3x"></i>
+                <h3>Backend Development</h3>
+                <p>Pengembangan backend dengan Node.js, Django, dan Laravel.</p>
+            </div>
+            <div class="course" onclick="openModal('devops')">
+                <i class="fas fa-tools fa-3x"></i>
+                <h3>DevOps & CI/CD</h3>
+                <p>Automasi deployment menggunakan Docker dan Kubernetes.</p>
+            </div>
+            <div class="course" onclick="openModal('codeeditor')">
+                <i class="fas fa-code fa-3x"></i>
+                <h3>Code Editor</h3>
+                <p>Pelajari berbagai editor kode seperti VS Code, JetBrains, Vim, dan lainnya.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Qourse Clone. Semua hak dilindungi.</p>
+    </footer>
+
+    <div id="htmlcssjs" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('htmlcssjs')">&times;</span>
+            <h2>Belajar HTML, CSS, dan JavaScript</h2>
+            <p>Materi Pembelajaran:</p>
+            <ul>
+                <li><strong>HTML:</strong> Pengenalan HTML
+                    <pre><code>&lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Halaman Pertama&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+                </li>
+                <li><strong>HTML:</strong> Struktur Dasar HTML
+                    <pre><code>&lt;header&gt;Header&lt;/header&gt;
+    &lt;nav&gt;Menu Navigasi&lt;/nav&gt;
+    &lt;main&gt;Konten Utama&lt;/main&gt;
+    &lt;footer&gt;Footer&lt;/footer&gt;</code></pre>
+                </li>
+                <li><strong>HTML:</strong> Tag dan Atribut HTML
+                    <pre><code>&lt;img src="gambar.jpg" alt="Deskripsi Gambar"&gt;</code></pre>
+                </li>
+                <li><strong>CSS:</strong> Pengenalan CSS
+                    <pre><code>body {
+        background-color: lightblue;
+        color: white;
+    }</code></pre>
+                </li>
+                <li><strong>CSS:</strong> Selector dan Properti CSS
+                    <pre><code>h1 {
+        font-size: 24px;
+        color: blue;
+    }</code></pre>
+                </li>
+                <li><strong>CSS:</strong> Flexbox dan Grid
+                    <pre><code>.container {
+        display: flex;
+        justify-content: space-between;
+    }</code></pre>
+                </li>
+                <li><strong>JavaScript:</strong> Pengenalan JavaScript
+                    <pre><code>console.log("Hello, World!");</code></pre>
+                </li>
+                <li><strong>JavaScript:</strong> Variabel dan Tipe Data
+                    <pre><code>let nama = "John";  
+    let umur = 25;</code></pre>
+                </li>
+                <li><strong>JavaScript:</strong> Fungsi dan Event Handling
+                    <pre><code>function sapa() {
+        alert("Halo, selamat datang!");
+    }
+    document.getElementById("tombol").onclick = sapa;</code></pre>
+                </li>
+                <li><strong>JavaScript:</strong> DOM Manipulation
+                    <pre><code>document.getElementById("judul").innerHTML = "Belajar JavaScript";</code></pre>
+                </li>
+                <li><strong>JavaScript:</strong> AJAX dan Fetch API
+                    <pre><code>fetch('https://api.example.com/data')
+        .then(response => response.json())
+        .then(data => console.log(data));</code></pre>
+                </li>
+                <li><strong>JavaScript & Framework:</strong> Framework Frontend (React, Vue, dll.)
+                    <pre><code>// React
+    function App() {
+        return &lt;h1&gt;Hello, React!&lt;/h1&gt;;
+    }</code></pre>
+                </li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+    ...
+    <!-- Modal Cyber Security -->
+    <div id="cybersecurity" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cybersecurity')">&times;</span>
+            <h2>Belajar Cyber Security</h2>
+            <p>Pelajari cara melindungi sistem dari ancaman digital.</p>
+            <ul>
+                <li><strong>Pengenalan Cyber Security:</strong> Konsep dasar dan pentingnya keamanan digital.</li>
+                <li><strong>Jenis Ancaman:</strong> Malware, Phishing, DDoS, Man-in-the-Middle, dll.</li>
+                <li><strong>Keamanan Jaringan:</strong> Firewall, VPN, IDS/IPS.</li>
+                <li><strong>Keamanan Website:</strong> SQL Injection, XSS, CSRF, Clickjacking.</li>
+                <li><strong>Keamanan Perangkat:</strong> Antivirus, Enkripsi, 2FA.</li>
+                <li><strong>Keamanan Data:</strong> Hashing, Salting, Backup.</li>
+                <li><strong>Ethical Hacking:</strong> Reconnaissance, Exploitation.</li>
+                <li><strong>Praktik Keamanan:</strong> Password Management, Social Engineering.</li>
+                <li><strong>Forensik Digital:</strong> Incident Response, Log Analysis.</li>
+                <li><strong>Cyber Law:</strong> Hukum dan etika hacking.</li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+
+    <!-- Modal HTML untuk Setiap Materi -->
+    <div id="htmlcssjs" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('htmlcssjs')">&times;</span>
+            <h2>Web Development</h2>
+            <p>Pelajari HTML, CSS, dan JavaScript dari dasar hingga mahir.</p>
+            <ul>
+                <li><strong>HTML:</strong> Struktur dasar HTML, tag, atribut, formulir, tabel.</li>
+                <li><strong>CSS:</strong> Styling, layout dengan Flexbox dan Grid, animasi.</li>
+                <li><strong>JavaScript:</strong> DOM Manipulation, event handling, AJAX, Fetch API.</li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+
+    <div id="cybersecurity" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cybersecurity')">&times;</span>
+            <h2>Cyber Security</h2>
+            <p>Pelajari cara melindungi data dan sistem dari serangan.</p>
+            <ul>
+                <li><strong>Cryptography:</strong> Enkripsi, hashing, digital signature.</li>
+                <li><strong>Network Security:</strong> Firewall, IDS/IPS, VPN.</li>
+                <li><strong>Ethical Hacking:</strong> Penetration testing, social engineering.</li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+
+    <div id="uiux" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('uiux')">&times;</span>
+            <h2>UI/UX Design</h2>
+            <p>Prinsip desain antarmuka dan pengalaman pengguna yang efektif.</p>
+            <ul>
+                <li><strong>Design Thinking:</strong> Proses desain dari penelitian hingga prototipe.</li>
+                <li><strong>UI Design:</strong> Warna, tipografi, ikonografi.</li>
+                <li><strong>UX Research:</strong> Pengujian usability, A/B testing.</li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+
+    <div id="database" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('database')">&times;</span>
+            <h2>Database Management</h2>
+            <p>Pelajari MySQL, PostgreSQL, dan MongoDB.</p>
+            <ul>
+                <li><strong>SQL:</strong> Query, normalisasi, indexing.</li>
+                <li><strong>NoSQL:</strong> MongoDB, Firebase.</li>
+                <li><strong>Database Security:</strong> Backup, enkripsi data.</li>
+            </ul>
+            <button onclick="startQuiz('htmlcssjs')">Start</button>
+            <!-- Tombol Start -->
+        </div>
+    </div>
+
+    <div id="networking" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('networking')">&times;</span>
+            <h2>Networking</h2>
+            <p>Dasar-dasar jaringan, protokol, dan keamanan jaringan.</p>
+            <ul>
+                <li><strong>Pengenalan Jaringan:</strong> Pengertian jaringan komputer dan manfaatnya.</li>
+                <li><strong>Jenis-Jenis Jaringan:</strong> LAN, MAN, WAN, VPN.</li>
+                <li><strong>Protokol Jaringan:</strong> TCP/IP, HTTP/HTTPS, FTP, DNS.</li>
+                <li><strong>Subnetting:</strong> Cara membagi jaringan menggunakan subnet mask.</li>
+                <li><strong>Keamanan Jaringan:</strong> Firewall, I
+                </ul>
+                <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="database" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('database')">&times;</span>
+                <h2>Database Management</h2>
+                <p>Pelajari MySQL, PostgreSQL, dan MongoDB.</p>
+                <ul>
+                    <li><strong>SQL:</strong> Query, normalisasi, indexing.</li>
+                    <li><strong>NoSQL:</strong> MongoDB, Firebase.</li>
+                    <li><strong>Database Security:</strong> Backup, enkripsi data.</li>
+                </ul>
+                <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="networking" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('networking')">&times;</span>
+                <h2>Networking</h2>
+                <p>Dasar-dasar jaringan, protokol, dan keamanan jaringan.</p>
+                <ul>
+                    <li><strong>Pengenalan Jaringan:</strong> Pengertian jaringan komputer dan manfaatnya.</li>
+                    <li><strong>Jenis-Jenis Jaringan:</strong> LAN, MAN, WAN, VPN.</li>
+                    <li><strong>Protokol Jaringan:</strong> TCP/IP, HTTP/HTTPS, FTP, DNS.</li>
+                    <li><strong>Subnetting:</strong> Cara membagi jaringan menggunakan subnet mask.</li>
+                    <li><strong>Keamanan Jaringan:</strong> Firewall, IDS/IPS.</li>
+                </ul>
+                <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="cloudcomputing" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('cloudcomputing')">&times;</span>
+                <h2>Cloud Computing</h2>
+                <p>Pengenalan AWS, Google Cloud, dan Azure.</p>
+                <ul>
+                    <li><strong>Pengantar Cloud Computing:</strong> Apa itu cloud computing dan manfaatnya.</li>
+                    <li><strong>Jenis Layanan Cloud:</strong> IaaS, PaaS, SaaS.</li>
+                    <li><strong>Platform Cloud:</strong> AWS, Google Cloud, Azure.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="machinelearning" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('machinelearning')">&times;</span>
+                <h2>Machine Learning & AI</h2>
+                <p>Belajar kecerdasan buatan dan pembelajaran mesin.</p>
+                <ul>
+                    <li><strong>Pengantar Machine Learning:</strong> Apa itu machine learning dan jenis-jenisnya.</li>
+                    <li><strong>Algoritma:</strong> Regresi, klasifikasi, clustering.</li>
+                    <li><strong>Tools:</strong> TensorFlow, scikit-learn, PyTorch.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="blockchain" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('blockchain')">&times;</span>
+                <h2>Blockchain & Crypto</h2>
+                <p>Memahami teknologi blockchain dan smart contract.</p>
+                <ul>
+                    <li><strong>Pengantar Blockchain:</strong> Apa itu blockchain dan cara kerjanya.</li>
+                    <li><strong>Cryptocurrency:</strong> Bitcoin, Ethereum, dan lainnya.</li>
+                    <li><strong>Smart Contracts:</strong> Pembuatan dan penggunaan smart contracts.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="mobiledevelopment" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('mobiledevelopment')">&times;</span>
+                <h2>Mobile App Development</h2>
+                <p>Pembuatan aplikasi Android dan iOS menggunakan Flutter dan React Native.</p>
+                <ul>
+                    <li><strong>Flutter:</strong> Pengantar Flutter dan Dart.</li>
+                    <li><strong>React Native:</strong> Pengantar React Native dan JavaScript.</li>
+                    <li><strong>UI/UX:</strong> Mendesain antarmuka yang menarik dan mudah digunakan.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="backend" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('backend')">&times;</span>
+                <h2>Backend Development</h2>
+                <p>Pengembangan backend dengan Node.js, Django, dan Laravel.</p>
+                <ul>
+                    <li><strong>Node.js:</strong> Pengantar Node.js dan Express.</li>
+                    <li><strong>Django:</strong> Pengantar Django dan Python.</li>
+                    <li><strong>Laravel:</strong> Pengantar Laravel dan PHP.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="devops" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('devops')">&times;</span>
+                <h2>DevOps & CI/CD</h2>
+                <p>Automasi deployment menggunakan Docker dan Kubernetes.</p>
+                <ul>
+                    <li><strong>Docker:</strong> Pengantar Docker dan containerization.</li>
+                    <li><strong>Kubernetes:</strong> Pengantar Kubernetes dan orchestration.</li>
+                    <li><strong>CI/CD:</strong> Continuous Integration dan Continuous Deployment.</li>
+                </ul>
+                 <button onclick="startQuiz('htmlcssjs')">Start</button> <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <div id="codeeditor" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('codeeditor')">&times;</span>
+                <h2>Code Editor</h2>
+                <p>Pelajari berbagai editor kode seperti VS Code, JetBrains, Vim, dan lainnya.</p>
+                <ul>
+                    <li><strong>VS Code:</strong> Pengantar VS Code dan fitur-fiturnya.</li>
+                    <li><strong>JetBrains:</strong> Pengantar JetBrains IDE dan fitur-fiturnya.</li>
+                    <li><strong>Vim:</strong> Pengantar Vim dan cara menggunakannya.</li>
+                </ul>
+                <button onclick="startQuiz('htmlcssjs')">Start</button>
+                <!-- Tombol Start -->
+            </div>
+        </div>
+        
+        <script>
+            function openModal(modalId) {
+                document.getElementById(modalId).style.display = "flex";
+            }
+        
+            function closeModal(modalId) {
+                document.getElementById(modalId).style.display = "none";
+            }
+            function startQuiz(courseId) {
+                // Redirect ke halaman quiz dengan membawa courseId
+                window.location.href = 'quiz.html?course=' + courseId;
+            }
+        </script>
+
+</body>
+</html>
+        
