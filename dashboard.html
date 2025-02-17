@@ -177,7 +177,68 @@
             margin-top: 0;
         }
 
-        
+        .main-nav {
+        list-style: none; /* Remove bullet points */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Arrange list items horizontally */
+        justify-content: space-around; /* Distribute space evenly */
+        background-color: #f0f0f0; /* Example background color */
+        padding: 10px;
+        }
+
+        .main-nav li {
+        margin: 0 10px; /* Add some spacing between items */
+        }
+
+        .main-nav a {
+        text-decoration: none; /* Remove underlines from links */
+        color: #333; /* Example link color */
+        padding: 5px 10px; /* Add padding to links */
+        }
+
+        /* Media query for smaller screens (e.g., mobile) */
+        @media (max-width: 768px) {
+        .main-nav {
+        flex-direction: column; /* Stack list items vertically */
+        align-items: center; /* Center the items */
+        }
+
+        .main-nav li {
+        margin: 10px 0; /* Adjust margin for vertical stacking */
+        width: 100%; /* Make list items take full width */
+        text-align: center; /* Center text within list items */
+        }
+
+        .main-nav a {
+        display: block; /* Make links fill the width of their container */
+        }
+        }
+
+        .main-nav {
+        list-style: none; /* Remove bullet points */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Arrange list items horizontally */
+        justify-content: space-around; /* Distribute space evenly */
+        background-color: #f0f0f0; /* Example background color (light gray) */
+        padding: 10px;  
+        }
+
+        .main-nav li {
+        margin: 0 10px; /* Add some spacing between items */
+        }
+
+        .main-nav a {
+        text-decoration: none; /* Remove underlines from links */
+        color: blue; /* Set link color to blue */
+        padding: 5px 10px; /* Add padding to links */
+        }
+
+        /* Optional: Add hover effect */
+        .main-nav a:hover {
+        color: darkblue; /* Darker blue on hover */
+        }
     </style>
 </head>
 
@@ -189,13 +250,17 @@
         </div>
         <nav>
             <ul>
-                <li><a href="dashboard.html">Home</a></li>
-                <li><a href="kursus.html">Kursus</a></li>
-                <li><a href="tentang.html">Tentang</a></li>
-                <li><a href="kontak.html">Kontak</a></li>
-                <li><a href="profil.html">Profil</a></li>
-                <li><a href="https://athallarakhasyaft.github.io/belajarIT/">Sumber Lainnya</a></li>
-                <li><a href="index.html">Logout</a></li>
+                <nav>
+                    <ul class="main-nav">
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="kursus.html">Kursus</a></li>
+                        <li><a href="tentang.html">Tentang</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                        <li><a href="profil.html">Profil</a></li>
+                        <li><a href="https://athallarakhasyaft.github.io/belajarIT/" target="_blank" rel="noopener noreferrer">Sumber Lainnya</a></li>
+                        <li><a href="index.html">Logout</a></li>
+                      </ul>
+                  </nav>
             </ul>
         </nav>
     </header>
