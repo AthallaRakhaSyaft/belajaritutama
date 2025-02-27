@@ -5,48 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
-    <!-- Favicon -->
     <link rel="icon" href="logobelajarit.jpg" type="image/jpeg">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Gaya Kustom (jika diperlukan) */
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Gaya untuk contoh sertifikat (tetap ada karena khusus) */
-        .certificate-example {
-            margin-top: 40px;
-            background-color: #e0f2f7;
-            /* Warna biru muda */
-            padding: 20px;
-            border-radius: 8px;
-            width: 60%;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 2px solid #007BFF;
-            /* Garis tepi biru */
+        .certificate-container {
+            display: none;
             text-align: center;
-            /* Pusatkan teks di dalam sertifikat */
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
 
-        .certificate-example h2 {
-            color: #007BFF;
-            /* Judul biru */
+        .certificate-container h2 {
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        /* Gaya untuk tombol cetak */
+        .certificate-container p {
+            font-size: 18px;
+        }
+
         #printBtn {
-            background-color: #6c757d;
-            /* Warna abu-abu */
+            background-color: #28a745;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -55,37 +40,63 @@
         }
 
         #printBtn:hover {
-            background-color: #5a6268;
-            /* Warna abu-abu yang lebih gelap saat hover */
-        }
-    </style>
-
-    <style media="print">
-        /* Sembunyikan semua elemen kecuali sertifikat */
-        body * {
-            visibility: hidden;
+            background-color: #218838;
         }
 
-        .certificate-example,
-        .certificate-example * {
-            visibility: visible;
+        @media print {
+            body {
+                background-color: #ADD8E6 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                min-height: 100vh !important;
+                margin: 0 !important;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            .certificate-container,
+            .certificate-container * {
+                visibility: visible;
+            }
+
+            .certificate-container {
+                position: absolute !important;
+                top: 0 !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                background: linear-gradient(to right, #007bff, #00c6ff) !important;
+                color: white !important;
+                width: 80% !important;
+                max-width: 600px !important;
+                margin: 20px auto !important;
+                box-sizing: border-box !important;
+            }
+
+            .certificate-container h2,
+            .certificate-container p {
+                color: white !important;
+                text-align: center !important;
+            }
+
+            #printBtn {
+                display: none !important;
+            }
+
+            /* Style for the logo in print */
+            .logo-print {
+                display: block !important;
+                max-width: 150px !important; /* Adjust as needed */
+                margin: 0 auto 10px !important; /* Center and add bottom margin */
+            }
         }
 
-        .certificate-example {
-            position: fixed;
-            /* Menggunakan fixed positioning */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* Pusatkan secara horizontal dan vertikal */
-            width: 100%;
-            /* Lebar 100% untuk mengisi kertas */
-            text-align: center;
-            /* Pastikan teks tetap di tengah */
-        }
-
-        #printBtn {
-            display: none; /* Sembunyikan tombol cetak saat mencetak */
+        /* Initially hide the logo */
+        .logo-print {
+            display: none;
         }
     </style>
 </head>
@@ -93,115 +104,87 @@
 <body class="bg-gray-100">
     <div class="container py-5">
         <div class="quiz-container bg-white rounded shadow-md p-6 mx-auto w-full max-w-lg">
-        <!-- Logo di atas form -->
-        <div class="w-full text-center mb-4">
-            <img src="logobelajarit.jpg" alt="Logo Qourse Clone" class="mx-auto" style="max-height: 100px;">
-        </div>
-        <div class="flex justify-center">
-            <h3 class="mb-4 text-2xl font-semibold text-gray-800">
-                Quiz
-            </h3>
-        </div>         
+            <div class="w-full text-center mb-4">
+                <img src="logobelajarit.jpg" alt="Logo" class="mx-auto" style="max-height: 100px;">
+            </div>
+            <div class="flex justify-center">
+                <h3 class="mb-4 text-2xl font-semibold text-gray-800">Quiz</h3>
+            </div>
             <form id="quizForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">1. Apa yang dimaksud dengan HTML?</label>
-                    <input type="text" name="question1"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <select name="question1" class="w-full p-2 border rounded">
+                        <option value="">Pilih jawaban</option>
+                        <option value="a">a) Hyper Text Markup Language</option>
+                        <option value="b">b) High Tech Machine Learning</option>
+                        <option value="c">c) Home Tool Meta Language</option>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">2. Apa itu Flexbox dalam CSS?</label>
-                    <input type="text" name="question2"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <select name="question2" class="w-full p-2 border rounded">
+                        <option value="">Pilih jawaban</option>
+                        <option value="a">a) Sistem layout berbasis grid</option>
+                        <option value="b">b) Sistem layout fleksibel untuk mengatur elemen</option>
+                        <option value="c">c) Teknologi baru dalam JavaScript</option>
+                    </select>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">3. Bagaimana cara menambahkan event click di
-                        JavaScript?</label>
-                    <input type="text" name="question3"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">3. Bagaimana cara menambahkan event click di JavaScript?</label>
+                    <select name="question3" class="w-full p-2 border rounded">
+                        <option value="">Pilih jawaban</option>
+                        <option value="a">a) element.addEventListener("click", function)</option>
+                        <option value="b">b) element.onclick = function</option>
+                        <option value="c">c) Kedua jawaban di atas benar</option>
+                    </select>
                 </div>
-                <button type="submit"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i
-                        class="fas fa-check mr-2"></i> Submit</button>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-check mr-2"></i> Submit
+                </button>
             </form>
-
-            <div id="certificate" class="mt-4 text-center" style="display:none;">
-                <h3 class="text-xl font-semibold text-green-600"><i class="fas fa-certificate mr-2"></i> Selamat! Anda telah
-                    menyelesaikan quiz dan mendapatkan sertifikat.</h3>
-                <p class="text-gray-700">Anda telah berhasil menyelesaikan quiz ini dengan jawaban yang benar. Sertifikat
-                    akan dikirimkan ke email Anda.</p>
-            </div>
         </div>
-
-        <!-- Contoh Sertifikat -->
-        <div class="certificate-example" id="certificateExample" style="display:none;">
-            <h2>Sertifikat Penyelesaian</h2>
-            <p><strong>Nama Peserta:</strong> <span id="participantName"></span></p>
+        <div class="certificate-container" id="certificate">
+            <img src="logobelajarit.jpg" alt="Logo" class="logo-print">
+            <h2>Sertifikat</h2>
+            <p><strong>Nama Peserta:</strong> <span id="participantName">Athalla Rakha Syafa'at</span></p>
             <p><strong>Kursus:</strong> HTML, CSS, dan JavaScript</p>
             <p><strong>Penghargaan:</strong> Sertifikat Penyelesaian Quiz</p>
             <p>Telah menyelesaikan semua soal dengan jawaban yang benar.</p>
-            <p><strong>Terima kasih telah mengikuti kursus ini!</strong></p>
             <p><em id="certificateDate"></em></p>
-            <div>
-                <button id="printBtn">Cetak Sertifikat</button>
-            </div>
+            <button id="printBtn" onclick="window.print()">Cetak Sertifikat</button>
         </div>
     </div>
-
     <script>
-        // Jawaban yang benar
-        const correctAnswers = [
-            "1",
-            "2",
-            "3"
-        ];
+        const correctAnswers = {
+            question1: "a",
+            question2: "b",
+            question3: "c"
+        };
 
-        // Fungsi untuk memeriksa jawaban
-        function checkAnswers() {
-            // Ambil jawaban dari form
-            const answer1 = document.querySelector("input[name='question1']").value.toLowerCase().trim();
-            const answer2 = document.querySelector("input[name='question2']").value.toLowerCase().trim();
-            const answer3 = document.querySelector("input[name='question3']").value.toLowerCase().trim();
-
-            // Periksa apakah semua jawaban benar
-            if (answer1 === correctAnswers[0] && answer2 === correctAnswers[1] && answer3 === correctAnswers[2]) {
-                showCertificate(); // Jika semua benar, tampilkan sertifikat
+        document.getElementById("quizForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let score = 0;
+            Object.keys(correctAnswers).forEach(question => {
+                const answer = document.querySelector(`select[name='${question}']`).value;
+                if (answer === correctAnswers[question]) {
+                    score++;
+                }
+            });
+            if (score === 3) {
+                showCertificate();
             } else {
-                alert("Beberapa jawaban Anda salah, silakan coba lagi.");
+                alert(`Skor Anda: ${score} dari 3. Coba lagi!`);
             }
-        }
+        });
 
-        // Fungsi untuk menampilkan sertifikat
         function showCertificate() {
-            const certificate = document.getElementById("certificate");
-            certificate.style.display = 'block'; // Menampilkan div sertifikat
-
-            // Mengambil nama peserta dari profil (menggunakan nilai yang sudah ada)
-            const participantName = "Athalla Rakha Syafa'at"; // Sesuaikan dengan nama peserta yang sesuai
-            const certificateDate = new Date().toLocaleDateString(); // Tanggal sertifikat (hari ini)
-
-            // Menampilkan nama peserta dan tanggal pada sertifikat
-            document.getElementById("participantName").innerText = participantName;
-            document.getElementById("certificateDate").innerText = certificateDate;
-
-            // Menampilkan contoh sertifikat
-            document.getElementById("certificateExample").style.display = 'block';
-
+            document.getElementById("certificate").style.display = 'block';
+            document.getElementById("certificateDate").innerText = new Date().toLocaleDateString();
         }
 
-        // Fungsi untuk mencetak sertifikat
         document.getElementById("printBtn").addEventListener("click", function () {
             window.print();
         });
-
-        // Event listener untuk form submit
-        document.getElementById("quizForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // Mencegah form untuk melakukan submit ke server
-            checkAnswers(); // Memeriksa jawaban
-        });
     </script>
-
-    <!-- Bootstrap JS (Opsional, jika Anda memerlukan fitur Bootstrap interaktif) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
